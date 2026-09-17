@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sua Imobiliária Precisa de IA? — Hermes Agents | Praia Digital</title>
+<meta name="description" content="Diagnóstico rápido: descubra o nível de maturidade digital da sua imobiliária e o impacto da IA.">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,sans-serif}
+  body{background:#faf5ff;color:#1e1b2e;min-height:100vh}
+  header{background:linear-gradient(135deg,#6B21A8,#A855F7);color:#fff;padding:1rem 1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem}
+  header a{color:#fff;text-decoration:none;font-weight:700}.logo{font-size:1.2rem}
+  main{max-width:640px;margin:2rem auto;padding:0 1rem}
+  .card{background:#fff;border-radius:16px;padding:1.75rem;box-shadow:0 4px 24px rgba(100,30,160,.1)}
+  h1{font-size:1.5rem;color:#6B21A8}.sub{color:#64748b;margin:.3rem 0 1.25rem;font-size:.95rem}
+  .q{font-weight:700;margin:.9rem 0 .5rem;font-size:.98rem}
+  .opt{display:block;width:100%;text-align:left;padding:.8rem 1rem;margin-bottom:.4rem;border:1px solid #e9d5ff;border-radius:12px;background:#fff;cursor:pointer;font-size:.95rem}
+  .opt:hover{border-color:#A855F7;background:#faf5ff}
+  button.final{width:100%;margin-top:1.2rem;padding:.9rem;border:0;border-radius:12px;background:#6B21A8;color:#fff;font-weight:800;font-size:1rem;cursor:pointer}
+  #res{display:none;margin-top:1.3rem;text-align:center}
+  .nivel{display:inline-block;font-size:1.1rem;font-weight:800;border-radius:999px;padding:.5rem 1.4rem;margin-bottom:.6rem}
+  .barra{height:14px;background:#ede9fe;border-radius:99px;overflow:hidden;margin:.8rem 0}
+  .barra div{height:100%;background:linear-gradient(90deg,#6B21A8,#A855F7);transition:width .5s}
+  .cta{display:inline-block;margin-top:.8rem;background:#25d366;color:#fff;padding:.8rem 1.6rem;border-radius:12px;text-decoration:none;font-weight:800}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="https://praia.digital/">🏖️ Praia Digital</a>
+  <a href="https://praia.digital/hermes-agents">← Hermes Agents</a>
+</header>
+<main>
+  <div class="card">
+    <h1>🔍 Sua Imobiliária Precisa de IA?</h1>
+    <p class="sub">Diagnóstico de maturidade digital em 5 perguntas.</p>
+    <div id="quiz">
+      <p class="q">1. Quanto tempo leva para responder um lead novo?</p>
+      <button class="opt" data-p="0">Horas ou dias</button>
+      <button class="opt" data-p="1">Menos de 1 hora</button>
+      <button class="opt" data-p="2">Imediato, automático</button>
+      <p class="q">2. Como você faz follow-up de leads antigos?</p>
+      <button class="opt" data-p="0">Não faço / quando lembro</button>
+      <button class="opt" data-p="1">Manualmente, por planilha</button>
+      <button class="opt" data-p="2">Automatizado por CRM</button>
+      <p class="q">3. Seu atendimento funciona fora do horário comercial?</p>
+      <button class="opt" data-p="0">Não</button>
+      <button class="opt" data-p="1">Às vezes, pelo meu WhatsApp</button>
+      <button class="opt" data-p="2">Sim, 24/7</button>
+      <p class="q">4. Você mede taxa de conversão de leads?</p>
+      <button class="opt" data-p="0">Não sei</button>
+      <button class="opt" data-p="1">Tenho uma estimativa</button>
+      <button class="opt" data-p="2">Sim, com dados</button>
+      <p class="q">5. Quanto tempo sua equipe gasta com tarefas repetitivas?</p>
+      <button class="opt" data-p="0">Mais de 4h/dia</button>
+      <button class="opt" data-p="1">1–4h/dia</button>
+      <button class="opt" data-p="2">Quase nada</button>
+      <button class="final" onclick="resultado()">Ver meu diagnóstico</button>
+    </div>
+    <div id="res">
+      <span class="nivel" id="nivel"></span>
+      <div class="barra"><div id="fill"></div></div>
+      <p id="desc" style="font-size:.95rem;color:#475569"></p>
+      <a class="cta" href="https://praia.digital/hermes-agents/roi-ia/">Calcular ROI da IA →</a>
+      <p style="margin-top:.8rem"><a href="https://praia.digital/hermes-agents/playground/" style="color:#6B21A8;font-size:.85rem">Testar o agente no Playground</a></p>
+    </div>
+  </div>
+</main>
+<script>
+var pontos=[];
+document.querySelectorAll('.opt').forEach(function(b){
+  b.addEventListener('click',function(){
+    var q=b.parentElement? null:null;
+    b.parentNode.querySelectorAll? null:null;
+    // deselect siblings within same question group (previous siblings until next .q)
+    var sib=b.parentElement.children;
+    var opts=[];
+    var start=b; while(start.previousElementSibling && start.previousElementSibling.classList.contains('opt')) start=start.previousElementSibling;
+    while(start && start.classList.contains('opt')){start.style.borderColor='';start.style.background='';opts.push(start);start=start.nextElementSibling;}
+    b.style.borderColor='#6B21A8'; b.style.background='#f3e8ff'; b.dataset.sel='1';
+  });
+});
+function resultado(){
+  var sel=document.querySelectorAll('.opt[data-sel="1"]');
+  var total=0; sel.forEach(function(b){total+=parseInt(b.dataset.p)});
+  var max=10, pct=Math.round(total/max*100);
+  var nivel, desc, cor;
+  if(pct<=30){nivel='🔴 Alto potencial de ganho';cor='#dc2626';desc='Sua operação está perdendo leads todos os dias. Um agente IA pode responder 100% dos leads em segundos, 24/7 — o impacto no faturamento é imediato.';}
+  else if(pct<=70){nivel='🟡 Maturidade intermediária';cor='#d97706';desc='Você já tem processos, mas ainda depende de esforço humano. A IA elimina o gargalo de velocidade e escala seu atendimento sem contratar.';}
+  else{nivel='🟢 Operação avançada';cor='#16a34a';desc='Excelente! O próximo nível é supervisão inteligente: agentes que aprendem com suas conversas e sugerem ações comerciais.';}
+  document.getElementById('quiz').style.display='none';
+  document.getElementById('res').style.display='block';
+  document.getElementById('nivel').textContent=nivel;
+  document.getElementById('nivel').style.background=cor+'22';document.getElementById('nivel').style.color=cor;
+  document.getElementById('desc').textContent=desc;
+  document.getElementById('fill').style.width=pct+'%';
+}
+</script>
+</body>
+</html>

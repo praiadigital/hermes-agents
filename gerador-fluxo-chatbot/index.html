@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Desenhador de Fluxo de Chatbot — Hermes Agents | Praia Digital</title>
+<meta name="description" content="Desenhe o fluxo de atendimento do seu agente de IA: boas-vindas, qualificação, agendamento e handoff humano.">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,sans-serif}
+  body{background:#faf5ff;color:#1e1b2e;min-height:100vh}
+  header{background:linear-gradient(135deg,#6B21A8,#A855F7);color:#fff;padding:1rem 1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem}
+  header a{color:#fff;text-decoration:none;font-weight:700}.logo{font-size:1.2rem}
+  main{max-width:700px;margin:2rem auto;padding:0 1rem}
+  .card{background:#fff;border-radius:16px;padding:1.75rem;box-shadow:0 4px 24px rgba(100,30,160,.1)}
+  h1{font-size:1.5rem;color:#6B21A8}.sub{color:#64748b;margin:.3rem 0 1.2rem;font-size:.95rem}
+  label{display:block;font-weight:600;font-size:.85rem;margin:.9rem 0 .3rem}
+  input,select{width:100%;padding:.7rem;border:1px solid #cbd5e1;border-radius:10px;font-size:1rem}
+  button{width:100%;margin-top:1.3rem;padding:.9rem;border:0;border-radius:12px;background:#6B21A8;color:#fff;font-weight:800;font-size:1rem;cursor:pointer}
+  #out{display:none;margin-top:1.3rem}
+  .no{background:#f8fafc;border:1px solid #e9d5ff;border-left:4px solid #A855F7;border-radius:0 12px 12px 0;padding:1rem;margin-top:.6rem;font-size:.9rem;line-height:1.6}
+  .no b{color:#6B21A8}
+  .seta{text-align:center;color:#A855F7;font-size:1.2rem;margin:.2rem 0}
+  .copy{margin-top:.8rem;padding:.6rem 1rem;border:1px solid #6B21A8;background:#fff;color:#6B21A8;border-radius:10px;font-weight:700;cursor:pointer}
+  .dica{margin-top:1rem;background:#f5f3ff;border:1px solid #c4b5fd;border-radius:12px;padding:1rem;font-size:.9rem}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="https://praia.digital/">🏖️ Praia Digital</a>
+  <a href="https://praia.digital/hermes-agents">← Hermes Agents</a>
+</header>
+<main>
+  <div class="card">
+    <h1>🧩 Desenhador de Fluxo de Chatbot</h1>
+    <p class="sub">Configure e receba o fluxo pronto para implementar no seu agente Hermes.</p>
+    <label>Nome do agente</label><input id="nome" value="Hermes">
+    <label>Objetivo principal</label>
+    <select id="obj"><option value="visita">Agendar visitas</option><option value="lead">Qualificar leads</option><option value="suporte">Suporte a hóspedes</option></select>
+    <label>Quando transferir para humano</label>
+    <select id="handoff"><option>Cliente pedir explicitamente</option><option>Após 2 respostas sem resolver</option><option>Somente fora do expediente</option></select>
+    <button onclick="gerar()">Desenhar fluxo</button>
+    <div id="out"></div>
+    <button class="copy" id="cp" style="display:none" onclick="copiar()">📋 Copiar fluxo</button>
+    <div class="dica">🎮 Veja um fluxo rodando no <a href="https://praia.digital/hermes-agents/playground/" style="color:#6B21A8;font-weight:700">Playground</a> · 🛡️ <a href="https://praia.digital/hermes-agents/playbook-objecoes/" style="color:#6B21A8;font-weight:700">Playbook de Objeções</a></div>
+  </div>
+</main>
+<script>
+function gerar(){
+  var n=document.getElementById('nome').value, o=document.getElementById('obj'), h=document.getElementById('handoff').value;
+  var acoes={visita:'Oferecer 2–3 horários de visita e confirmar por WhatsApp',lead:'Coletar nome, objetivo, cidade e orçamento do lead',suporte:'Identificar o problema e acionar o responsável'};
+  var nos=[
+    ['1. BOAS-VINDAS','"'+n+'" se apresenta, pergunta o nome e como pode ajudar. Tom: cordial e direto.'],
+    ['2. IDENTIFICAÇÃO','Detecta intenção: comprar, investir, alugar ou anunciar. Se ambíguo, oferece 3 opções em botões.'],
+    ['3. QUALIFICAÇÃO',acoes[o.value]+'. Máximo 3 perguntas por vez — nunca interrogar.'],
+    ['4. RESPOSTA DE VALOR','Entrega algo útil imediato: simulação, link da ferramenta certa da rede ou lista de imóveis.'],
+    ['5. AÇÃO PRINCIPAL',acoes[o.value]+' — confirmação por escrito.'],
+    ['6. HANDOFF HUMANO','Regra: '+h.toLowerCase()+'. Transfere com resumo da conversa já coletado.'],
+    ['7. PÓS-ATENDIMENTO','24h depois: mensagem de follow-up automática e pedido de feedback.']
+  ];
+  document.getElementById('out').innerHTML=nos.map(function(x,i){
+    return (i>0?'<div class="seta">↓</div>':'')+'<div class="no"><b>'+x[0]+'</b><br>'+x[1]+'</div>';
+  }).join('');
+  document.getElementById('out').style.display='block';
+  document.getElementById('cp').style.display='inline-block';
+}
+function copiar(){
+  var txt=[].slice.call(document.querySelectorAll('.no')).map(function(n){return n.innerText}).join('\n\n→\n\n');
+  navigator.clipboard.writeText(txt);
+  document.getElementById('cp').textContent='✅ Copiado!';
+}
+</script>
+</body>
+</html>

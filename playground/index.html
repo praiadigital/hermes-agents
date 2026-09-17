@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Playground Hermes — Agente IA Imobiliário | Praia Digital</title>
+<meta name="description" content="Experimente uma demonstração de agente de IA atendendo leads imobiliários em tempo real.">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,sans-serif}
+  body{background:#f0f9ff;color:#0f172a;min-height:100vh}
+  header{background:linear-gradient(135deg,#0077B6,#00B4D8);color:#fff;padding:1rem 1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem}
+  header a{color:#fff;text-decoration:none;font-weight:700}.logo{font-size:1.2rem}
+  main{max-width:640px;margin:2rem auto;padding:0 1rem}
+  .card{background:#fff;border-radius:16px;padding:1.5rem;box-shadow:0 4px 24px rgba(0,60,100,.08)}
+  h1{font-size:1.4rem;color:#0077B6}.sub{color:#64748b;margin:.3rem 0 1rem;font-size:.92rem}
+  #chat{height:380px;overflow-y:auto;border:1px solid #e2e8f0;border-radius:12px;padding:1rem;background:#f8fafc;display:flex;flex-direction:column;gap:.6rem}
+  .msg{max-width:85%;padding:.65rem .9rem;border-radius:12px;font-size:.92rem;line-height:1.5}
+  .bot{background:#fff;border:1px solid #e2e8f0;align-self:flex-start}
+  .user{background:#0077B6;color:#fff;align-self:flex-end}
+  .row{display:flex;gap:.5rem;margin-top:.8rem}
+  input{flex:1;padding:.75rem;border:1px solid #cbd5e1;border-radius:10px;font-size:1rem}
+  button{padding:.75rem 1.1rem;border:0;border-radius:10px;background:#0077B6;color:#fff;font-weight:800;cursor:pointer}
+  .sugs{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.7rem}
+  .sug{font-size:.8rem;padding:.4rem .8rem;border-radius:999px;border:1px solid #cbd5e1;background:#fff;cursor:pointer;color:#0f172a}
+  .sug:hover{border-color:#0077B6}
+  .dica{margin-top:1rem;background:#f5f3ff;border:1px solid #c4b5fd;border-radius:12px;padding:1rem;font-size:.9rem}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="https://praia.digital/">🏖️ Praia Digital</a>
+  <a href="https://praia.digital/hermes-agents">← Hermes Agents</a>
+</header>
+<main>
+  <div class="card">
+    <h1>🤖 Playground Hermes</h1>
+    <p class="sub">Demonstração local de como um agente Hermes qualifica leads imobiliários. (Demo offline — sem dados reais enviados.)</p>
+    <div id="chat"></div>
+    <div class="sugs">
+      <button class="sug" onclick="ask('Quero um apartamento de 2 quartos em Praia Grande até 600 mil')">🏠 Apto 2q em PG até 600k</button>
+      <button class="sug" onclick="ask('Qual cidade é melhor para investir?')">📊 Melhor cidade p/ investir</button>
+      <button class="sug" onclick="ask('Quanto posso financiar com renda de 8 mil?')">🏦 Capacidade de financiamento</button>
+    </div>
+    <div class="row">
+      <input id="inp" placeholder="Digite como se fosse um lead..." onkeydown="if(event.key==='Enter')send()">
+      <button onclick="send()">Enviar</button>
+    </div>
+    <div class="dica">🚀 Quando pronto para produção, o Hermes conecta WhatsApp, site e CRM com supervisão humana. <a href="https://praia.digital/hermes-agents" style="color:#6d28d9;font-weight:700">Conhecer a solução completa →</a></div>
+  </div>
+</main>
+<script>
+var chat=document.getElementById('chat');
+function add(txt,cls){var d=document.createElement('div');d.className='msg '+cls;d.textContent=txt;chat.appendChild(d);chat.scrollTop=chat.scrollHeight;}
+add('Olá! Sou o Hermes, agente de IA da Praia Digital. Posso qualificar seu interesse, simular valores e agendar visitas. Como posso ajudar?','bot');
+function reply(q){
+  var s=q.toLowerCase();
+  if(s.includes('financ')||s.includes('renda')) return 'Com renda de R$ 8.000, sua parcela máxima seria ~R$ 2.400 (30% da renda), o que financia cerca de R$ 280–320 mil em 30 anos. Quer que eu simule com FGTS? Posso também indicar nosso Simulador de Crédito completo.';
+  if(s.includes('investir')||s.includes('cidade')) return 'Para investimento em temporada, Bertioga lidera em valorização (14,5%/ano) e Praia Grande em liquidez (60% de ocupação). Guarujá tem as maiores diárias (R$ 550). Quer comparar os números lado a lado?';
+  if(s.includes('quarto')||s.includes('apart')||s.includes('apto')) return 'Ótimo perfil! Em Praia Grande, apartamentos de 2 quartos na faixa de R$ 500–600 mil têm ótima saída para temporada (diária média R$ 400). Posso agendar uma visita esta semana? Me diga o melhor dia.';
+  if(s.includes('oi')||s.includes('olá')||s.includes('ola')) return 'Olá! Você está buscando comprar, investir ou anunciar um imóvel no litoral?';
+  return 'Entendi! Para te ajudar melhor: você busca comprar, investir em temporada ou vender? Se preferir, posso transferir você para um corretor humano agora pelo WhatsApp.';
+}
+function send(){
+  var v=document.getElementById('inp').value.trim(); if(!v)return;
+  document.getElementById('inp').value='';
+  add(v,'user');
+  setTimeout(function(){add(reply(v),'bot');},500);
+}
+function ask(q){add(q,'user');setTimeout(function(){add(reply(q),'bot');},500);}
+</script>
+</body>
+</html>

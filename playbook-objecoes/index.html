@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Playbook de Objeções com IA — Hermes Agents | Praia Digital</title>
+<meta name="description" content="As 6 objeções mais comuns de clientes imobiliários e as respostas que convertem — prontas para treinar seu agente.">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,sans-serif}
+  body{background:#faf5ff;color:#1e1b2e;min-height:100vh}
+  header{background:linear-gradient(135deg,#6B21A8,#A855F7);color:#fff;padding:1rem 1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem}
+  header a{color:#fff;text-decoration:none;font-weight:700}.logo{font-size:1.2rem}
+  main{max-width:720px;margin:2rem auto;padding:0 1rem}
+  .card{background:#fff;border-radius:16px;padding:1.75rem;box-shadow:0 4px 24px rgba(100,30,160,.1)}
+  h1{font-size:1.5rem;color:#6B21A8}.sub{color:#64748b;margin:.3rem 0 1.2rem;font-size:.95rem}
+  .ob{border:1px solid #e9d5ff;border-radius:12px;margin-bottom:.7rem;overflow:hidden}
+  .ob-head{width:100%;text-align:left;padding:1rem 1.1rem;background:#faf5ff;border:0;font-weight:700;font-size:.95rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:#1e1b2e}
+  .ob-body{display:none;padding:1rem 1.1rem;font-size:.92rem;line-height:1.65;background:#fff;border-top:1px solid #e9d5ff;white-space:pre-wrap}
+  .ob.open .ob-body{display:block}
+  .ob.open .ob-head{background:#f3e8ff;color:#6B21A8}
+  .tag{font-size:.7rem;background:#6B21A8;color:#fff;border-radius:999px;padding:.15rem .55rem;margin-left:.5rem}
+  .dica{margin-top:1.2rem;background:#f5f3ff;border:1px solid #c4b5fd;border-radius:12px;padding:1rem;font-size:.9rem}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="https://praia.digital/">🏖️ Praia Digital</a>
+  <a href="https://praia.digital/hermes-agents">← Hermes Agents</a>
+</header>
+<main>
+  <div class="card">
+    <h1>🛡️ Playbook de Objeções</h1>
+    <p class="sub">Clique em cada objeção para ver a resposta que converte. Use para treinar equipe ou agente de IA.</p>
+    <div id="lista"></div>
+    <div class="dica">🤖 O Hermes responde essas objeções automaticamente, 24/7. Teste no <a href="https://praia.digital/hermes-agents/playground/" style="color:#6B21A8;font-weight:700">Playground</a> · Calcule o impacto no <a href="https://praia.digital/hermes-agents/roi-ia/" style="color:#6B21A8;font-weight:700">ROI de IA</a></div>
+  </div>
+</main>
+<script>
+var obs=[
+  ['"Está caro"','Preco','Entendi, e faz sentido comparar. Posso te mostrar o preço por m² desse imóvel vs a média do bairro? Você vai ver que ele está [acima/abaixo] porque [diferencial]. Além disso, imóveis com esse perfil ficam anunciados em média apenas X dias. Quer ver os números?'],
+  ['"Vou esperar baixar"','Timing','Claro, é uma decisão importante. Só um dado: essa região valorizou 12% no último ano — esperar 12 meses pode custar mais que a negociação de hoje. Posso te mandar a projeção do bairro?'],
+  ['"Preciso conversar com meu cônjuge/sócio"','Decisao','Perfeito, decisão assim é a dois mesmo. Que tal eu agendar uma visita ou videochamada para vocês dois amanhã? Assim tiro as dúvidas de vocês ao mesmo tempo. Qual horário funciona?'],
+  ['"Estou só pesquisando"','Intencao','Sem pressão nenhuma! Pesquisar é o primeiro passo certo. Posso te mandar nosso guia gratuito da região? Assim quando decidir, você já sabe tudo. Qual seu WhatsApp?'],
+  ['"Não tenho entrada suficiente"','Financas','Muita gente pensa isso, mas existem caminhos: FGTS como entrada, MCMV com subsídio, ou consórcio com parcela menor. Posso simular suas opções em 2 minutos?'],
+  ['"Imóvel na planta é arriscado"','Confianca','Cautela inteligente. Por isso só trabalhamos com incorporadoras com histórico de entrega. Posso te mostrar o memorial, as garantias legais e cases de entregas anteriores?']
+];
+document.getElementById('lista').innerHTML=obs.map(function(o){
+  return '<div class="ob"><button class="ob-head" onclick="this.parentElement.classList.toggle(\'open\')">'+o[0]+'<span class="tag">ver resposta</span></button><div class="ob-body">'+o[2]+'</div></div>';
+}).join('');
+</script>
+</body>
+</html>

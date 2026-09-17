@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gerador de Campanha de Reativação — Hermes Agents | Praia Digital</title>
+<meta name="description" content="Sequência de 3 mensagens para reativar leads frios da sua base de contatos imobiliária.">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,sans-serif}
+  body{background:#faf5ff;color:#1e1b2e;min-height:100vh}
+  header{background:linear-gradient(135deg,#6B21A8,#A855F7);color:#fff;padding:1rem 1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem}
+  header a{color:#fff;text-decoration:none;font-weight:700}.logo{font-size:1.2rem}
+  main{max-width:680px;margin:2rem auto;padding:0 1rem}
+  .card{background:#fff;border-radius:16px;padding:1.75rem;box-shadow:0 4px 24px rgba(100,30,160,.1)}
+  h1{font-size:1.5rem;color:#6B21A8}.sub{color:#64748b;margin:.3rem 0 1.2rem;font-size:.95rem}
+  label{display:block;font-weight:600;font-size:.85rem;margin:.9rem 0 .3rem}
+  input,select{width:100%;padding:.7rem;border:1px solid #cbd5e1;border-radius:10px;font-size:1rem}
+  button{width:100%;margin-top:1.3rem;padding:.9rem;border:0;border-radius:12px;background:#6B21A8;color:#fff;font-weight:800;font-size:1rem;cursor:pointer}
+  .msg{background:#f8fafc;border:1px solid #e9d5ff;border-left:4px solid #A855F7;border-radius:0 12px 12px 0;padding:1rem;margin-top:.8rem;font-size:.9rem;line-height:1.65;white-space:pre-wrap;display:none}
+  .msg b{color:#6B21A8}
+  .cp{float:right;border:1px solid #6B21A8;color:#6B21A8;background:#fff;border-radius:8px;padding:.25rem .7rem;font-size:.75rem;font-weight:700;cursor:pointer}
+  .dica{margin-top:1.2rem;background:#f5f3ff;border:1px solid #c4b5fd;border-radius:12px;padding:1rem;font-size:.9rem}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="https://praia.digital/">🏖️ Praia Digital</a>
+  <a href="https://praia.digital/hermes-agents">← Hermes Agents</a>
+</header>
+<main>
+  <div class="card">
+    <h1>🔄 Reativação de Leads Frios</h1>
+    <p class="sub">70% das vendas acontecem no follow-up. Gere a sequência de 3 toques que o Hermes automatiza:</p>
+    <label>Seu nome/empresa</label><input id="quem" value="Ana — Praia Digital">
+    <label>Perfil do lead</label>
+    <select id="perfil"><option>buscava apartamento na praia</option><option>queria investir em temporada</option><option>se interessou por lançamento</option><option>quase fechou, mas sumiu</option></select>
+    <label>Gatilho da reativação</label>
+    <select id="gatilho"><option>entraram novas unidades</option><option>o preço foi reduzido</option><option>condição especial deste mês</option><option>alta temporada chegando</option></select>
+    <button onclick="gerar()">Gerar sequência de 3 toques</button>
+    <div id="lista"></div>
+    <div class="dica">🤖 O Hermes executa essa sequência automaticamente para toda a sua base. Veja o impacto no <a href="https://praia.digital/hermes-agents/roi-ia/" style="color:#6B21A8;font-weight:700">ROI de IA</a>.</div>
+  </div>
+</main>
+<script>
+function gerar(){
+  var q=document.getElementById('quem').value, p=document.getElementById('perfil').value, g=document.getElementById('gatilho').value;
+  var msgs=[
+    ['Toque 1 — Reconexão (dia 1)','Oi! Aqui é '+q+'. Você chegou a conversar com a gente porque '+p+' — ainda está nos planos? 😊\n\nPergunto porque '+g+' e lembrei de você na hora.'],
+    ['Toque 2 — Valor (dia 3)','Passando para compartilhar algo útil: preparamos um material com as melhores oportunidades deste mês no litoral.\n\nComo '+g+', achei que combinava com o que você procurava. Posso te mandar?'],
+    ['Toque 3 — Fechamento gentil (dia 7)','Última mensagem, prometo! 😄\n\nComo '+g+', as melhores opções estão saindo rápido. Se ainda fizer sentido para você, me chama que eu separo as 3 melhores.\n\nSe o momento passou, sem problemas — te tiro da lista. Um abraço!']
+  ];
+  document.getElementById('lista').innerHTML=msgs.map(function(m,i){
+    return '<div class="msg" id="m'+i+'" style="display:block"><button class="cp" onclick="navigator.clipboard.writeText(document.getElementById(\'m'+i+'\').innerText);this.textContent=\'✓\'">Copiar</button><b>'+m[0]+'</b>\n\n'+m[1]+'</div>';
+  }).join('');
+}
+</script>
+</body>
+</html>
